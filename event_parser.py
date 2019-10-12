@@ -1,5 +1,6 @@
 import json
 import sys
+import collections
 
 
 def readLog(filename):
@@ -44,6 +45,16 @@ def itemsFavorites(eventLog):
 
     return len(listItems)
 
+def itemsLike(eventLog):
+
+    counter = collections.Counter()
+    
+    for line in eventLog:
+        if line["eventType"] == "itemFavEvent":
+            counter[line["item_id"]] += 1
+
+    return counter
+
 if __name__ == '__main__':
 
     eventLog = readLog(sys.argv[1])
@@ -56,3 +67,11 @@ if __name__ == '__main__':
 
     valItemFavorites = itemsFavorites(eventLog)
     print("Число различных товаров, которые были добавлены в избранное: {}".format(valItemFavorites))
+
+    counter = itemsLike(eventLog)
+    for item, cnt in counter.most_common(10):
+        print("Популярные товары {} -- {}".format(item, cnt))
+
+    counter = itemsLike(eventLog)
+    for item, cnt in counter.most_common()[:-2:-1]:
+        print("Самый непопулярный товар {} -- {}".format(item, cnt))
