@@ -24,6 +24,16 @@ def userAgents(eventLog):
 
     return len(listUserAgents)
 
+def itemPrice(eventLog):
+
+    sum = 0
+
+    for line in eventLog:
+        if line["eventType"] == "itemBuyEvent":
+            sum += int(line["item_price"])
+
+    return sum
+
 
 if __name__ == '__main__':
 
@@ -31,3 +41,6 @@ if __name__ == '__main__':
 
     valUserAgents = userAgents(eventLog)
     print("Число различных браузеров среди всех клиентов: {}".format(valUserAgents))
+
+    sumPrice = itemPrice(eventLog)
+    print("Сумма всех покупок: {}".format(sumPrice))
