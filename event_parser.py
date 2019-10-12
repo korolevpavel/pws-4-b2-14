@@ -34,6 +34,15 @@ def itemPrice(eventLog):
 
     return sum
 
+def itemsFavorites(eventLog):
+
+    listItems = set()
+
+    for line in eventLog:
+        if line["eventType"] == "itemFavEvent":
+            listItems.add(line["item_id"])  
+
+    return len(listItems)
 
 if __name__ == '__main__':
 
@@ -44,3 +53,6 @@ if __name__ == '__main__':
 
     sumPrice = itemPrice(eventLog)
     print("Сумма всех покупок: {}".format(sumPrice))
+
+    valItemFavorites = itemsFavorites(eventLog)
+    print("Число различных товаров, которые были добавлены в избранное: {}".format(valItemFavorites))
